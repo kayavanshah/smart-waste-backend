@@ -27,13 +27,9 @@ router.post("/", protect, async (req, res) => {
       return res.status(400).json({ error: "Image does not appear to contain valid waste/garbage.", aiResult });
     }
 
-    const uploadResponse = await cloudinary.uploader.upload(imageBase64, {
-      folder: "smart-waste-reports",
-    });
-
     const report = await Report.create({
       user: req.user._id,
-      imageUrl: uploadResponse.secure_url,
+      imageUrl: imageBase64, // Saving directly to MongoDB as Base64 to bypass Cloudinary
       location,
       status: "Pending",
       aiValidation: aiResult,
