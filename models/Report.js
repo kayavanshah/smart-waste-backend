@@ -18,6 +18,7 @@ const reportSchema = new mongoose.Schema(
       confidence: Number,
       message: String,
     },
+    details: { type: String, required: false },
   },
   { timestamps: true }
 );

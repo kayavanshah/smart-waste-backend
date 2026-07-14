@@ -14,7 +14,7 @@ cloudinary.config({
 
 router.post("/", protect, async (req, res) => {
   try {
-    const { imageBase64, location } = req.body;
+    const { imageBase64, location, details } = req.body;
 
     if (!imageBase64 || !location || !location.lat || !location.lng) {
       return res.status(400).json({ error: "Missing required fields" });
@@ -33,6 +33,7 @@ router.post("/", protect, async (req, res) => {
       location,
       status: "Pending",
       aiValidation: aiResult,
+      details,
     });
 
     res.status(201).json({ message: "Report submitted successfully", report });
