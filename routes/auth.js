@@ -107,7 +107,7 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      if (!user.isVerified) {
+      if (!user.isVerified && user.role !== "admin") {
         return res.status(403).json({ error: "Email not verified. Please register again to receive a new OTP." });
       }
 
