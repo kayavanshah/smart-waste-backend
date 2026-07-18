@@ -47,9 +47,9 @@ router.get("/", protect, async (req, res) => {
   try {
     let reports;
     if (req.user.role === "admin") {
-      reports = await Report.find().populate("user", "name email").sort({ createdAt: -1 });
+      reports = await Report.find().populate("user", "name email").sort({ createdAt: -1 }).limit(20);
     } else {
-      reports = await Report.find({ user: req.user._id }).sort({ createdAt: -1 });
+      reports = await Report.find({ user: req.user._id }).sort({ createdAt: -1 }).limit(20);
     }
 
     res.status(200).json({ reports });
